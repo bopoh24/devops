@@ -1,0 +1,20 @@
+- name: Create user and add to sudo and docker groups
+  hosts: all
+  become: true
+  vars_files:
+    - ./vars.yml
+  tasks:
+    - name: Create user and add to groups
+      user:
+        name: "{{ user }}"
+        password: "{{ password | password_hash('sha512') }}"
+        groups:
+          - sudo
+          - docker
+        shell: /bin/bash
+        createhome: yes
+
+    - name: "Add authorized keys"
+      authorized_key:
+        user: "{{ user }}"
+        key: "{{ lookup('file', ssh_key_file) }}"
