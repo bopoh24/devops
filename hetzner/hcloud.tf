@@ -13,6 +13,11 @@ variable "HCLOUD_TOKEN" {
   type = string
 }
 
+# Define default ssh key path
+variable "SSH_KEY_PATH" {
+  type = string
+}
+
 # Configure the Hetzner Cloud Provider
 provider "hcloud" {
   token = var.HCLOUD_TOKEN
@@ -39,5 +44,5 @@ resource "hcloud_volume" "storage" {
 # Create a new SSH key
 resource "hcloud_ssh_key" "default" {
   name       = "My key"
-  public_key = file("~/.ssh/id_rsa.pub")
+  public_key = file(var.SSH_KEY_PATH)
 }

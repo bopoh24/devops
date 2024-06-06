@@ -8,13 +8,13 @@ all, help:
 
 hz-plan: ## Plan hetzner
 	@echo "Planning hetzner"
-	cd ./hetzner && terraform init && TF_VAR_HCLOUD_TOKEN=$(HCLOUD_TOKEN) terraform plan
+	cd ./hetzner && terraform init && TF_VAR_HCLOUD_TOKEN=$(HCLOUD_TOKEN) TF_VAR_SSH_KEY_PATH=$(SSH_KEY_PATH) terraform plan
 	@echo "Hetzner planned"
 .PHONY: hz-plan
 
 hz-apply: ## Apply hetzner
 	@echo "Applying hetzner"
-	cd ./hetzner && terraform init && TF_VAR_HCLOUD_TOKEN=$(HCLOUD_TOKEN) terraform apply -auto-approve
+	cd ./hetzner && terraform init && TF_VAR_HCLOUD_TOKEN=$(HCLOUD_TOKEN) TF_VAR_SSH_KEY_PATH=$(SSH_KEY_PATH) terraform apply -auto-approve
 	@echo "Hetzner applied"
 .PHONY: hz-apply
 
