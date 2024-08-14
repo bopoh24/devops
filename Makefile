@@ -18,6 +18,11 @@ hz-apply: ## Apply hetzner
 	@echo "Hetzner applied"
 .PHONY: hz-apply
 
+hz-destroy: ## Destroy hetzner
+	@echo "Destroying hetzner"
+	cd ./hetzner && terraform init && TF_VAR_HCLOUD_TOKEN=$(HCLOUD_TOKEN) TF_VAR_SSH_KEY_PATH=$(SSH_KEY_PATH) terraform destroy -auto-approve
+	@echo "Hetzner destroyed"
+
 docker-install: ## Install docker
 	@echo "Installing docker"
 	cd ./ansible && ansible-playbook -i inventory.yaml docker.yaml
