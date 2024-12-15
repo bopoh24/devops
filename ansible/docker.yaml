@@ -2,41 +2,32 @@
   hosts: all
   become: true
   tasks:
-    - name: Install aptitude
+    - name: Update and install prerequisites
       apt:
-        name: aptitude
-        state: latest
-        update_cache: true
-
-    - name: Install required system packages
-      apt:
-        pkg:
+        update_cache: yes
+        name:
           - apt-transport-https
           - ca-certificates
           - curl
-          - software-properties-common
-          - python3-pip
-          - virtualenv
-          - python3-setuptools
-        state: latest
-        update_cache: true
+          - gnupg
+          - lsb-release
+        state: present
 
-    - name: Add Docker GPG key
+    - name: Add Docker’s official GPG key
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
-    - name: Add Docker Repository
+    - name: Set up the Docker repository
       apt_repository:
-        repo: deb https://download.docker.com/linux/ubuntu jammy stable
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
         state: present
 
-    - name: Update apt and install docker-ce
+    - name: Install Docker Engine
       apt:
-        name: docker-ce
-        state: latest
-        update_cache: true
-
-    - name: Install Docker Module for Python
-      pip:
-        name: docker
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose-plugin
+        state: present
