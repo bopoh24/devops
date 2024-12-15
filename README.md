@@ -6,7 +6,9 @@
 1) Terraform
 2) Hetzner Cloud API Token
 3) Ansible
- 
+
+For MacOS you can run `make deps` (brew required) or install manually
+
 ## Terraform
 
 Create ```hetzner/.env``` file. See example ```hetzner/.env-example```
